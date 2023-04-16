@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ManagementSEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Agent">
+          <Key>
+            <PropertyRef Name="AgentID" />
+          </Key>
+          <Property Name="AgentID" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="AgentName" Type="varchar" MaxLength="40" />
+          <Property Name="Address" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="ItemName" Type="varchar" MaxLength="40" />
+          <Property Name="Size" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="OrderID" Type="char" MaxLength="5" />
+          <Property Name="ItemID" Type="char" MaxLength="5" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="UnitAmount" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Orderss">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="AgentID" Type="char" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="tblUsers">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="40" />
+          <Property Name="Password" Type="char" MaxLength="5" />
+        </EntityType>
+        <Association Name="FK__OrderDeta__ItemI__3E52440B">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Order__3F466844">
+          <End Role="Orderss" Type="Self.Orderss" Multiplicity="0..1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orderss">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orderss__AgentID__403A8C7D">
+          <End Role="Agent" Type="Self.Agent" Multiplicity="0..1" />
+          <End Role="Orderss" Type="Self.Orderss" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentID" />
+            </Principal>
+            <Dependent Role="Orderss">
+              <PropertyRef Name="AgentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ManagementSEModelStoreContainer">
+          <EntitySet Name="Agent" EntityType="Self.Agent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orderss" EntityType="Self.Orderss" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__OrderDeta__ItemI__3E52440B" Association="Self.FK__OrderDeta__ItemI__3E52440B">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Order__3F466844" Association="Self.FK__OrderDeta__Order__3F466844">
+            <End Role="Orderss" EntitySet="Orderss" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orderss__AgentID__403A8C7D" Association="Self.FK__Orderss__AgentID__403A8C7D">
+            <End Role="Agent" EntitySet="Agent" />
+            <End Role="Orderss" EntitySet="Orderss" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ManagementSEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Agent">
+          <Key>
+            <PropertyRef Name="AgentID" />
+          </Key>
+          <Property Name="AgentID" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="AgentName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ordersses" Relationship="Self.FK__Orderss__AgentID__403A8C7D" FromRole="Agent" ToRole="Orderss" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Size" Type="Int32" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__ItemI__3E52440B" FromRole="Item" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="OrderID" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="ItemID" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="UnitAmount" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK__OrderDeta__ItemI__3E52440B" FromRole="OrderDetail" ToRole="Item" />
+          <NavigationProperty Name="Orderss" Relationship="Self.FK__OrderDeta__Order__3F466844" FromRole="OrderDetail" ToRole="Orderss" />
+        </EntityType>
+        <EntityType Name="Orderss">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="AgentID" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Agent" Relationship="Self.FK__Orderss__AgentID__403A8C7D" FromRole="Orderss" ToRole="Agent" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Order__3F466844" FromRole="Orderss" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__Orderss__AgentID__403A8C7D">
+          <End Role="Agent" Type="Self.Agent" Multiplicity="0..1" />
+          <End Role="Orderss" Type="Self.Orderss" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentID" />
+            </Principal>
+            <Dependent Role="Orderss">
+              <PropertyRef Name="AgentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__ItemI__3E52440B">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Order__3F466844">
+          <End Role="Orderss" Type="Self.Orderss" Multiplicity="0..1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orderss">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DevConn" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Agents" EntityType="Self.Agent" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="Ordersses" EntityType="Self.Orderss" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <AssociationSet Name="FK__Orderss__AgentID__403A8C7D" Association="Self.FK__Orderss__AgentID__403A8C7D">
+            <End Role="Agent" EntitySet="Agents" />
+            <End Role="Orderss" EntitySet="Ordersses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__ItemI__3E52440B" Association="Self.FK__OrderDeta__ItemI__3E52440B">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Order__3F466844" Association="Self.FK__OrderDeta__Order__3F466844">
+            <End Role="Orderss" EntitySet="Ordersses" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ManagementSEModelStoreContainer" CdmEntityContainer="DevConn">
+          <EntitySetMapping Name="Agents">
+            <EntityTypeMapping TypeName="ManagementSEModel.Agent">
+              <MappingFragment StoreEntitySet="Agent">
+                <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+                <ScalarProperty Name="AgentName" ColumnName="AgentName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="ManagementSEModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="ManagementSEModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitAmount" ColumnName="UnitAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ordersses">
+            <EntityTypeMapping TypeName="ManagementSEModel.Orderss">
+              <MappingFragment StoreEntitySet="Orderss">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="ManagementSEModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

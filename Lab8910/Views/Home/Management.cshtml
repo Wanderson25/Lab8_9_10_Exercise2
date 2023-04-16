@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Management";
+}
+
+<h2>Management site. Only for Authorized Personals with Clearance above level 2</h2>
+
+<div>
+    <div class="row1">
+        <p>
+            @Html.ActionLink("Products", "Index", "Items")
+        </p>
+        <p>
+            @Html.ActionLink("Agency", "Index", "Agents")
+        </p>
+        <p>
+            @Html.ActionLink("Order History", "Index", "Ordersses")
+        </p>
+    </div>
+</div>
+<a href="https://www.iana.org/domains/reserved"><button style="background-color: #007bff; color: #fff; font-size: 16px;">Go to Order Form</button></a>
+<style>
+    .row1 {
+        font-size: 30px;
+    }
+</style>
